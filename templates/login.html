@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LibraX — Login</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+</head>
+<body>
+<div class="login-page">
+  <div class="login-card">
+    <div class="login-brand">
+      <div class="brand-icon">📚</div>
+      <div>
+        <h1>LibraX</h1>
+        <span>Library Management</span>
+      </div>
+    </div>
+
+    <p class="login-title">Welcome back</p>
+    <p class="login-subtitle">Sign in to access your dashboard</p>
+
+    {% if error %}
+    <div class="alert-error">⚠️ {{ error }}</div>
+    {% endif %}
+
+    <form method="POST" action="/">
+      <div class="role-toggle">
+        <input type="radio" name="role" id="role-admin" value="admin" checked/>
+        <label for="role-admin">🔐 Admin</label>
+        <input type="radio" name="role" id="role-user" value="user"/>
+        <label for="role-user">👤 User</label>
+      </div>
+
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" name="username" placeholder="Enter your username" required autocomplete="off"/>
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" name="password" placeholder="Enter your password" required/>
+      </div>
+
+      <button type="submit" class="btn-primary">Sign In →</button>
+    </form>
+
+    <div class="login-hint">
+      <strong>Admin:</strong> admin / admin123 &nbsp;|&nbsp; <strong>User:</strong> user / user123
+    </div>
+  </div>
+</div>
+</body>
+</html>

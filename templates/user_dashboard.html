@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LibraX — User Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+</head>
+<body>
+<div class="dashboard">
+
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="s-icon">📚</div>
+      <div>
+        <h2>LibraX</h2>
+        <small>Library Portal</small>
+      </div>
+    </div>
+    <div class="sidebar-section">Navigation</div>
+    <nav>
+      <a href="/user" class="active">
+        <span class="nav-icon">🏠</span> Dashboard
+      </a>
+      <a href="/user#browse">
+        <span class="nav-icon">📖</span> Browse Books
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="/logout"><span>🚪</span> Logout</a>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-left">
+        <h3>Library Collection</h3>
+        <p>Browse and explore available books</p>
+      </div>
+      <div class="topbar-right">
+        <div class="user-pill">
+          <div class="user-avatar">U</div>
+          <span>User</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon blue">📚</div>
+          <div class="stat-info">
+            <h2>{{ total }}</h2>
+            <p>Books Available</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green">🔍</div>
+          <div class="stat-info">
+            <h2>{{ books|length }}</h2>
+            <p>{{ 'Results Found' if search else 'Showing All' }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="browse">
+        <div class="section-header">
+          <h3>📖 Browse Collection</h3>
+          <form method="GET" action="/user">
+            <div class="search-bar">
+              <span>🔍</span>
+              <input type="text" name="search" placeholder="Search by title or author..." value="{{ search }}"/>
+            </div>
+          </form>
+        </div>
+
+        {% if books %}
+        <div class="books-grid">
+          {% set badges = ['badge-blue','badge-purple','badge-green','badge-orange','badge-pink'] %}
+          {% for book in books %}
+          <div class="book-card">
+            <div class="book-num">Book #{{ '%03d' % book.id }}</div>
+            <h4>{{ book.name }}</h4>
+            <p class="author">{{ book.author }}</p>
+            <span class="badge {{ badges[loop.index % 5] }}">{{ book.genre }}</span>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="table-card">
+          <div class="empty-state">
+            <div class="e-icon">📭</div>
+            <p>No books found{% if search %} for "{{ search }}"{% endif %}.</p>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>
